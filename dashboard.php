@@ -23,8 +23,11 @@ $participants = $stmt->get_result();
 $stmt = $conn->prepare("SELECT staff_name, staff_contact, staff_email, support_details, medication, specific_instructions 
                         FROM log_entries 
                         WHERE user_id = ? AND action = 'logout' 
-                        ORDER BY logout_time DESC LIMIT 1");
-$stmt->bind_param("i", $user_id);
+                        ORDER BY logout_time DESC LIMIT 1AS last_login
+                        FROM participants p
+                        INNER JOIN user_participants up ON p.id = up.participant_id
+                        WHERE up.user_id = ?");
+$stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $participants_last_info = $stmt->get_result()->fetch_assoc();
 
