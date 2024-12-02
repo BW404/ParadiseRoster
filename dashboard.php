@@ -26,7 +26,7 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $participants_last_info = $stmt->get_result();
 
-$row = $participants_last_info->fetch_assoc();
+$row = $participants_last_info
 
 $last_staff_name = $row['staff_name'];
 $last_staff_contact = $row['staff_contact'];
@@ -46,6 +46,7 @@ $last_instructions = $row['instructions'];
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,42 +57,45 @@ $last_instructions = $row['instructions'];
         body {
             background-color: #f8f9fa;
         }
+
         h2 {
             margin-bottom: 20px;
         }
+
         .form-label {
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h2 class="text-center">Welcome</h2>
+    <div class="container mt-5">
+        <h2 class="text-center">Welcome</h2>
 
-    <!-- Display message if any -->
-    <?php if (isset($_SESSION['message'])): ?>
-        <div class="alert alert-<?= $_SESSION['message_type'] ?>" role="alert">
-            <?= $_SESSION['message'] ?>
-        </div>
-        <?php unset($_SESSION['message']); ?>
-        <?php unset($_SESSION['message_type']); ?>
-    <?php endif; ?>
+        <!-- Display message if any -->
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-<?= $_SESSION['message_type'] ?>" role="alert">
+                <?= $_SESSION['message'] ?>
+            </div>
+            <?php unset($_SESSION['message']); ?>
+            <?php unset($_SESSION['message_type']); ?>
+        <?php endif; ?>
 
-    <h3>Last Support Worker Info</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Staff Name</th>
-                <th>Staff Contact</th>
-                <th>Staff Email</th>
-                <th>Support Details</th>
-                <th>Medication Provied</th>
-                <!-- <th>Handover</th> -->
-                <th>Instructions</th>
-            </tr>
-        </thead>
-        <tbody>
+        <h3>Last Support Worker Info</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Staff Name</th>
+                    <th>Staff Contact</th>
+                    <th>Staff Email</th>
+                    <th>Support Details</th>
+                    <th>Medication Provied</th>
+                    <!-- <th>Handover</th> -->
+                    <th>Instructions</th>
+                </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td><?php echo $last_staff_name; ?></td>
                     <td><?php echo $last_staff_contact; ?></td>
@@ -101,152 +105,157 @@ $last_instructions = $row['instructions'];
                     <td><?php echo $last_instructions; ?></td>
                 </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <form id="actionForm" action="process_action.php" method="POST">
-        <div class="mb-3">
-            <label for="participant" class="form-label">Participant Name</label>
-            <select name="participant_id" id="participant" class="form-select" required>
-                <option value="">-- Select Participant --</option>
-                <?php while ($row = $participants->fetch_assoc()): ?>
-                    <option value="<?php echo $row['id']; ?>">
-                        <?php echo $row['name']; ?>
-                        <?php if ($row['last_login']): ?>
-                            (Last Login: <?php echo date('Y-m-d H:i', strtotime($row['last_login'])); ?>)
-                        <?php else: ?>
-                            (No login yet)
-                        <?php endif; ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Action</label><br>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="action" value="login" id="login" required>
-                <label class="form-check-label" for="login">Login</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="action" value="logout" id="logout">
-                <label class="form-check-label" for="logout">Logout</label>
-            </div>
-        </div>
-
-        <div id="logoutFields" style="display: none;">
+        <form id="actionForm" action="process_action.php" method="POST">
             <div class="mb-3">
-                <label class="form-label">Is there any incident?</label>
-                <select name="incident" id="incident" class="form-select">
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
+                <label for="participant" class="form-label">Participant Name</label>
+                <select name="participant_id" id="participant" class="form-select" required>
+                    <option value="">-- Select Participant --</option>
+                    <?php while ($row = $participants->fetch_assoc()): ?>
+                        <option value="<?php echo $row['id']; ?>">
+                            <?php echo $row['name']; ?>
+                            <?php if ($row['last_login']): ?>
+                                (Last Login: <?php echo date('Y-m-d H:i', strtotime($row['last_login'])); ?>)
+                            <?php else: ?>
+                                (No login yet)
+                            <?php endif; ?>
+                        </option>
+                    <?php endwhile; ?>
                 </select>
             </div>
-            <div id="incidentDetails" style="display: none;">
-                <!-- Incident details fields here -->
-                <div class="mb-3">
-                    <label for="incident_time" class="form-label">When (Time)</label>
-                    <input type="time" name="incident_time" id="incident_time" class="form-control">
+            <div class="mb-3">
+                <label class="form-label">Action</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="action" value="login" id="login" required>
+                    <label class="form-check-label" for="login">Login</label>
                 </div>
-                <div class="mb-3">
-                    <label for="incident_where" class="form-label">Where?</label>
-                    <input type="text" name="incident_where" id="incident_where" class="form-control">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="action" value="logout" id="logout">
+                    <label class="form-check-label" for="logout">Logout</label>
                 </div>
+            </div>
+
+            <div id="logoutFields" style="display: none;">
                 <div class="mb-3">
-                    <label for="calm_time" class="form-label">When did they calm down? (Time)</label>
-                    <input type="time" name="calm_time" id="calm_time" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="description" id="description" class="form-control"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="hurt" class="form-label">Did anyone get hurt?</label>
-                    <select name="hurt" id="hurt" class="form-select">
+                    <label class="form-label">Is there any incident?</label>
+                    <select name="incident" id="incident" class="form-select">
                         <option value="no">No</option>
                         <option value="yes">Yes</option>
                     </select>
                 </div>
+                <div id="incidentDetails" style="display: none;">
+                    <!-- Incident details fields here -->
+                    <div class="mb-3">
+                        <label for="incident_time" class="form-label">When (Time)</label>
+                        <input type="time" name="incident_time" id="incident_time" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="incident_where" class="form-label">Where?</label>
+                        <input type="text" name="incident_where" id="incident_where" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="calm_time" class="form-label">When did they calm down? (Time)</label>
+                        <input type="time" name="calm_time" id="calm_time" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hurt" class="form-label">Did anyone get hurt?</label>
+                        <select name="hurt" id="hurt" class="form-select">
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="current_status" class="form-label">Current Status</label>
+                        <textarea name="current_status" id="current_status" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <!-- New Fields for Logout -->
                 <div class="mb-3">
-                    <label for="current_status" class="form-label">Current Status</label>
-                    <textarea name="current_status" id="current_status" class="form-control"></textarea>
+                    <label for="staff_name" class="form-label">Staff Name</label>
+                    <input type="text" name="staff_name" id="staff_name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="staff_contact" class="form-label">Staff Contact</label>
+                    <input type="text" name="staff_contact" id="staff_contact" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="staff_email" class="form-label">Staff Email</label>
+                    <input type="email" name="staff_email" id="staff_email" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="service_location" class="form-label">Service Location</label>
+                    <input type="text" name="service_location" id="service_location" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="support_details" class="form-label">Details of Today's Support</label>
+                    <textarea name="support_details" id="support_details" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Medication</label><br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="medication[]" value="Morning"
+                            id="medication_morning">
+                        <label class="form-check-label" for="medication_morning">Morning</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="medication[]" value="Lunch"
+                            id="medication_lunch">
+                        <label class="form-check-label" for="medication_lunch">Lunch</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="medication[]" value="Evening"
+                            id="medication_evening">
+                        <label class="form-check-label" for="medication_evening">Evening</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="medication[]" value="Bedtime"
+                            id="medication_bedtime">
+                        <label class="form-check-label" for="medication_bedtime">Bedtime</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="handover" class="form-label">Handover to Support Worker</label>
+                    <input type="text" name="handover" id="handover" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="instructions" class="form-label">Instructions for Next Staff</label>
+                    <textarea name="instructions" id="instructions" class="form-control"></textarea>
                 </div>
             </div>
 
-            <!-- New Fields for Logout -->
-            <div class="mb-3">
-                <label for="staff_name" class="form-label">Staff Name</label>
-                <input type="text" name="staff_name" id="staff_name" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="staff_contact" class="form-label">Staff Contact</label>
-                <input type="text" name="staff_contact" id="staff_contact" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="staff_email" class="form-label">Staff Email</label>
-                <input type="email" name="staff_email" id="staff_email" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="service_location" class="form-label">Service Location</label>
-                <input type="text" name="service_location" id="service_location" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="support_details" class="form-label">Details of Today's Support</label>
-                <textarea name="support_details" id="support_details" class="form-control"></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Medication</label><br>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="medication[]" value="Morning" id="medication_morning">
-                    <label class="form-check-label" for="medication_morning">Morning</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="medication[]" value="Lunch" id="medication_lunch">
-                    <label class="form-check-label" for="medication_lunch">Lunch</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="medication[]" value="Evening" id="medication_evening">
-                    <label class="form-check-label" for="medication_evening">Evening</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="medication[]" value="Bedtime" id="medication_bedtime">
-                    <label class="form-check-label" for="medication_bedtime">Bedtime</label>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="handover" class="form-label">Handover to Support Worker</label>
-                <input type="text" name="handover" id="handover" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="instructions" class="form-label">Instructions for Next Staff</label>
-                <textarea name="instructions" id="instructions" class="form-control"></textarea>
-            </div>
-        </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+    </div>
 
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
-    </form>
-</div>
+    <script>
+        $(document).ready(function () {
+            $('input[name="action"]').change(function () {
+                if ($(this).val() === 'logout') {
+                    $('#logoutFields').show();
+                    $('#instructions, #staff_name, #staff_contact, #staff_email, #service_location, #support_details, #handover').prop('required', true);
+                } else {
+                    $('#logoutFields').hide();
+                    $('#incidentDetails').hide();
+                    $('#instructions, #staff_name , #staff_contact, #staff_email, #service_location, #support_details, #handover').prop('required', false);
+                }
+            });
 
-<script>
-    $(document).ready(function () {
-        $('input[name="action"]').change(function () {
-            if ($(this).val() === 'logout') {
-                $('#logoutFields').show();
-                $('#instructions, #staff_name, #staff_contact, #staff_email, #service_location, #support_details, #handover').prop('required', true);
-            } else {
-                $('#logoutFields').hide();
-                $('#incidentDetails').hide();
-                $('#instructions, #staff_name , #staff_contact, #staff_email, #service_location, #support_details, #handover').prop('required', false);
-            }
+            $('#incident').change(function () {
+                if ($(this).val() === 'yes') {
+                    $('#incidentDetails').show();
+                } else {
+                    $('#incidentDetails').hide();
+                }
+            });
         });
-
-        $('#incident').change(function () {
-            if ($(this).val() === 'yes') {
-                $('#incidentDetails').show();
-            } else {
-                $('#incidentDetails').hide();
-            }
-        });
-    });
-</script>
+    </script>
 </body>
+
 </html>
