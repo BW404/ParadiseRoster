@@ -1,4 +1,13 @@
+
 <?php
+
+session_start();
+include 'db_connect.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+
 // Database connection
 $conn = new mysqli("localhost", "username", "password", "database");
 if ($conn->connect_error) {
