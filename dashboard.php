@@ -9,6 +9,21 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+if (isset($_GET['participant_id'])) {
+    $participant_id = $_GET['participant_id'];
+
+    $stmt = $conn->prepare("SELECT staff_name, staff_contact, staff_email, support_details, medication, specific_instructions 
+                            FROM log_entries 
+                            WHERE user_id = ? AND participant_id = ? AND action = 'logout' 
+                            ORDER BY logout_time DESC LIMIT 1");
+    $stmt->bind_param("ii", $user_id, $participant_id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    echo json_encode($result);
+    exit();
+}
+
 // Fetch participants allocated to the logged-in user along with the last login time
 $stmt = $conn->prepare("SELECT p.id, p.name, 
                                (SELECT login_time FROM log_entries WHERE user_id = ? AND participant_id = p.id AND action = 'login' ORDER BY login_time DESC LIMIT 1) AS last_login
@@ -87,12 +102,12 @@ $last_instructions = $participants_last_info['specific_instructions'];
             </thead>
             <tbody>
                 <tr>
-                    <td><?php echo $last_staff_name; ?></td>
-                    <td><?php echo $last_staff_contact; ?></td>
-                    <td><?php echo $last_staff_email; ?></td>
-                    <td><?php echo $last_support_details; ?></td>
-                    <td><?php echo $last_medication; ?></td>
-                    <td><?php echo $last_instructions; ?></td>
+                    <td id="last_staff_name"><?php echo $last_staff_name; ?></td>
+                    <td id="last_staff_contact"><?php echo $last_staff_contact; ?></td>
+                    <td id="last_staff_email"><?php echo $last_staff_email; ?></td>
+                    <td id="last_support_details"><?php echo $last_support_details; ?></td>
+                    <td id="last_medication"><?php echo $last_medication; ?></td>
+                    <td id="last_instructions"><?php echo $last_instructions; ?></td>
                 </tr>
             </tbody>
         </table>
@@ -241,6 +256,26 @@ $last_instructions = $participants_last_info['specific_instructions'];
                     $('#incidentDetails').show();
                 } else {
                     $('#incidentDetails').hide();
+                }
+            });
+
+            $('#participant').change(function () {
+                var participant_id = $(this).val();
+                if (participant_id) {
+                    $.ajax({
+                        url: 'dashboard.php',
+                        type: 'GET',
+                        data: { participant_id: participant_id },
+                        success: function (data) {
+                            var info = JSON.parse(data);
+                            $('#last_staff_name').text(info.staff_name);
+                            $('#last_staff_contact').text(info.staff_contact);
+                            $('#last_staff_email').text(info.staff_email);
+                            $('#last_support_details').text(info.support_details);
+                            $('#last_medication').text(info.medication);
+                            $('#last_instructions').text(info.specific_instructions);
+                        }
+                    });
                 }
             });
         });
