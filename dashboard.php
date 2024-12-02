@@ -20,7 +20,7 @@ $stmt->execute();
 $participants = $stmt->get_result();
 
 // Fetch last support worker info
-$stmt = $conn->prepare("SELECT staff_name, staff_contact, staff_email, support_details, medication, instructions 
+$stmt = $conn->prepare("SELECT staff_name, staff_contact, staff_email, support_details, medication, specific_instructions 
                         FROM log_entries 
                         WHERE user_id = ? AND action = 'logout' 
                         ORDER BY logout_time DESC LIMIT 1");
@@ -33,7 +33,7 @@ $last_staff_contact = $participants_last_info['staff_contact'];
 $last_staff_email = $participants_last_info['staff_email'];
 $last_support_details = $participants_last_info['support_details'];
 $last_medication = $participants_last_info['medication'];
-$last_instructions = $participants_last_info['instructions'];
+$last_instructions = $participants_last_info['specific_instructions'];
 ?>
 
 <!DOCTYPE html>
