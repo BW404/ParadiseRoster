@@ -72,6 +72,10 @@ $last_instructions = $participants_last_info['specific_instructions'];
         .form-label {
             font-weight: bold;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -89,7 +93,7 @@ $last_instructions = $participants_last_info['specific_instructions'];
         <?php endif; ?>
 
         <h3>Last Support Worker Info</h3>
-        <table class="table table-striped">
+        <table id="supportWorkerInfo" class="table table-striped hidden">
             <thead>
                 <tr>
                     <th>Staff Name</th>
@@ -274,8 +278,11 @@ $last_instructions = $participants_last_info['specific_instructions'];
                             $('#last_support_details').text(info.support_details);
                             $('#last_medication').text(info.medication);
                             $('#last_instructions').text(info.specific_instructions);
+                            $('#supportWorkerInfo').removeClass('hidden');
                         }
                     });
+                } else {
+                    $('#supportWorkerInfo').addClass('hidden');
                 }
             });
         });
