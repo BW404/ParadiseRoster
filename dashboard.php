@@ -18,6 +18,19 @@ $stmt = $conn->prepare("SELECT p.id, p.name,
 $stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $participants = $stmt->get_result();
+
+
+$stmt = $conn->prepare("SELECT p.id, p.name, 
+                               (SELECT * FROM log_entries WHERE user_id = ? AND participant_id = p.id AND action = 'log' ORDER BY login_time DESC LIMIT 1) AS last_login
+                        FROM participants p
+                        INNER JOIN user_participants up ON p.id = up.participant_id
+                        WHERE up.user_id = ?");
+$stmt->bind_param("ii", $user_id, $user_id);
+$stmt->execute();
+$participants = $stmt->get_result();
+
+
+
 ?>
 
 <!DOCTYPE html>
