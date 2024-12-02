@@ -89,7 +89,7 @@ $last_instructions = $participants_last_info['specific_instructions'];
 
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Welcome</h2>
+        <h2 class="text-center">Welcome To Paradise Roster</h2>
 
         <!-- Display message if any -->
         <?php if (isset($_SESSION['message'])): ?>
