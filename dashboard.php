@@ -31,10 +31,10 @@ $row = $participants_last_info->fetch_assoc();
 $last_staff_name = $row['staff_name'];
 $last_staff_contact = $row['staff_contact'];
 $last_staff_email = $row['staff_email'];
-$last_service_location = $row['service_location'];
+// $last_service_location = $row['service_location'];
 $last_support_details = $row['support_details'];
-$last_medication = $row['medication'];
-$last_handover = $row['handover'];
+// $last_medication = $row['medication'];
+// $last_handover = $row['handover'];
 $last_instructions = $row['instructions'];
 
 
