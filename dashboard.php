@@ -19,29 +19,21 @@ $stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $participants = $stmt->get_result();
 
-
-$stmt = $conn->prepare("SELECT p.id, p.name, 
-                               (SELECT * FROM log_entries WHERE user_id = ? AND participant_id = p.id AND action = 'logout' ORDER BY logout_time DESC LIMIT 1)");
+// Fetch last support worker info
+$stmt = $conn->prepare("SELECT staff_name, staff_contact, staff_email, support_details, medication, instructions 
+                        FROM log_entries 
+                        WHERE user_id = ? AND action = 'logout' 
+                        ORDER BY logout_time DESC LIMIT 1");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$participants_last_info = $stmt->get_result();
+$participants_last_info = $stmt->get_result()->fetch_assoc();
 
-$row = $participants_last_info;
-
-$last_staff_name = $row['staff_name'];
-$last_staff_contact = $row['staff_contact'];
-$last_staff_email = $row['staff_email'];
-// $last_service_location = $row['service_location'];
-$last_support_details = $row['support_details'];
-$last_medication = $row['medication'];
-// $last_handover = $row['handover'];
-$last_instructions = $row['instructions'];
-
-
-
-
-
-
+$last_staff_name = $participants_last_info['staff_name'];
+$last_staff_contact = $participants_last_info['staff_contact'];
+$last_staff_email = $participants_last_info['staff_email'];
+$last_support_details = $participants_last_info['support_details'];
+$last_medication = $participants_last_info['medication'];
+$last_instructions = $participants_last_info['instructions'];
 ?>
 
 <!DOCTYPE html>
@@ -85,13 +77,11 @@ $last_instructions = $row['instructions'];
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Name</th>
                     <th>Staff Name</th>
                     <th>Staff Contact</th>
                     <th>Staff Email</th>
                     <th>Support Details</th>
-                    <th>Medication Provied</th>
-                    <!-- <th>Handover</th> -->
+                    <th>Medication Provided</th>
                     <th>Instructions</th>
                 </tr>
             </thead>
@@ -104,7 +94,6 @@ $last_instructions = $row['instructions'];
                     <td><?php echo $last_medication; ?></td>
                     <td><?php echo $last_instructions; ?></td>
                 </tr>
-
             </tbody>
         </table>
 
