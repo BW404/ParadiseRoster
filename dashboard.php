@@ -26,7 +26,7 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $participants_last_info = $stmt->get_result();
 
-$row = $participants_last_info
+$row = $participants_last_info;
 
 $last_staff_name = $row['staff_name'];
 $last_staff_contact = $row['staff_contact'];
