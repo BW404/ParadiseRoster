@@ -33,7 +33,7 @@ $last_staff_contact = $row['staff_contact'];
 $last_staff_email = $row['staff_email'];
 // $last_service_location = $row['service_location'];
 $last_support_details = $row['support_details'];
-// $last_medication = $row['medication'];
+$last_medication = $row['medication'];
 // $last_handover = $row['handover'];
 $last_instructions = $row['instructions'];
 
@@ -76,6 +76,33 @@ $last_instructions = $row['instructions'];
         <?php unset($_SESSION['message']); ?>
         <?php unset($_SESSION['message_type']); ?>
     <?php endif; ?>
+
+    <h3>Last Support Worker Info</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Staff Name</th>
+                <th>Staff Contact</th>
+                <th>Staff Email</th>
+                <th>Support Details</th>
+                <th>Medication Provied</th>
+                <!-- <th>Handover</th> -->
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td><?php echo $last_staff_name; ?></td>
+                    <td><?php echo $last_staff_contact; ?></td>
+                    <td><?php echo $last_staff_email; ?></td>
+                    <td><?php echo $last_support_details; ?></td>
+                    <td><?php echo $last_medication; ?></td>
+                    <td><?php echo $last_instructions; ?></td>
+                </tr>
+
+        </tbody>
+    </table>
 
     <form id="actionForm" action="process_action.php" method="POST">
         <div class="mb-3">
