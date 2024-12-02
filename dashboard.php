@@ -76,6 +76,14 @@ $last_instructions = $participants_last_info['specific_instructions'];
         .hidden {
             display: none;
         }
+
+        .container {
+            padding: 15px;
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -93,28 +101,30 @@ $last_instructions = $participants_last_info['specific_instructions'];
         <?php endif; ?>
 
         <h3>Last Support Worker Info</h3>
-        <table id="supportWorkerInfo" class="table table-striped hidden">
-            <thead>
-                <tr>
-                    <th>Staff Name</th>
-                    <th>Staff Contact</th>
-                    <th>Staff Email</th>
-                    <th>Support Details</th>
-                    <th>Medication Provided</th>
-                    <th>Instructions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="last_staff_name"><?php echo $last_staff_name; ?></td>
-                    <td id="last_staff_contact"><?php echo $last_staff_contact; ?></td>
-                    <td id="last_staff_email"><?php echo $last_staff_email; ?></td>
-                    <td id="last_support_details"><?php echo $last_support_details; ?></td>
-                    <td id="last_medication"><?php echo $last_medication; ?></td>
-                    <td id="last_instructions"><?php echo $last_instructions; ?></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="supportWorkerInfo" class="table table-striped hidden">
+                <thead>
+                    <tr>
+                        <th>Staff Name</th>
+                        <th>Staff Contact</th>
+                        <th>Staff Email</th>
+                        <th>Support Details</th>
+                        <th>Medication Provided</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="last_staff_name"><?php echo $last_staff_name; ?></td>
+                        <td id="last_staff_contact"><?php echo $last_staff_contact; ?></td>
+                        <td id="last_staff_email"><?php echo $last_staff_email; ?></td>
+                        <td id="last_support_details"><?php echo $last_support_details; ?></td>
+                        <td id="last_medication"><?php echo $last_medication; ?></td>
+                        <td id="last_instructions"><?php echo $last_instructions; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <form id="actionForm" action="process_action.php" method="POST">
             <div class="mb-3">
