@@ -20,10 +20,10 @@ $stmt->execute();
 $participants = $stmt->get_result();
 
 // Fetch last support worker info
-$stmt = $conn->prepare("SELECT staff_name, staff_contact, staff_email, support_details, medication, specific_instructions 
+$stmt = $conn->prepare("SELECT p.id, p.name,(SELECT staff_name, staff_contact, staff_email, support_details, medication, specific_instructions 
                         FROM log_entries 
                         WHERE user_id = ? AND action = 'logout' 
-                        ORDER BY logout_time DESC LIMIT 1AS last_login
+                        ORDER BY logout_time DESC LIMIT 1)AS last_login
                         FROM participants p
                         INNER JOIN user_participants up ON p.id = up.participant_id
                         WHERE up.user_id = ?");
