@@ -23,7 +23,7 @@ $participants = $stmt->get_result();
 $stmt = $conn->prepare("SELECT p.id, p.name,
                                 (SELECT staff_name, staff_contact, staff_email, support_details, medication, specific_instructions FROM log_entries 
                         WHERE user_id = ? articipant_id = p.id AND action = 'logout' 
-                        ORDER BY logout_time DESC LIMIT 1) AS last_login
+                        ORDER BY logout_time DESC LIMIT 1) AS last_logout
                         FROM participants p
                         INNER JOIN user_participants up ON p.id = up.participant_id
                         WHERE up.user_id = ?");
