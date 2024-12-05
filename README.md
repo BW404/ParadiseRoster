@@ -98,7 +98,7 @@ CONSTRAINT `log_entries_ibfk_2` FOREIGN KEY (`participant_id`) REFERENCES `parti
 
 
 ## **TODO**
-- ~~ Add following fields before incident details (This part will be visible to the next support worker) [start working] ~~
+- <s> Add following fields before incident details (This part will be visible to the next support worker) [start working]</s>
     - Staff Name:
     - Staff Contact: 
     - Staff Email:
