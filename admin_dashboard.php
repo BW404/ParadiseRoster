@@ -13,7 +13,7 @@ $result_users = $conn->query($sql_users);
 // Fetch all log entries
 $sql_logs = "SELECT l.id, u.username, p.name AS participant_name, l.action, l.login_time, l.logout_time, 
                     l.incident_time, l.incident_location, l.calm_time, l.description, l.hurt, l.current_status, 
-                    l.specific_instructions
+                    l.specific_instructions,l.staff_name, l.staff_email, l.service_location, l.support_details, l.medication, l.handover
              FROM log_entries l
              JOIN users u ON l.user_id = u.id
              JOIN participants p ON l.participant_id = p.id
@@ -50,7 +50,7 @@ $conn->close();
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <h1 class="text-center mb-4">Admin Dashboard</h1>
     
     <!-- Tabs -->
@@ -115,6 +115,7 @@ $conn->close();
                     <th>Login Time</th>
                     <th>Logout Time</th>
                     <th>Incident Details</th>
+                    <th>Support Workwe Info</th>
                     <th>Specific Instructions</th>
                 </tr>
                 </thead>
@@ -140,6 +141,18 @@ $conn->close();
                                     No Incident
                                 <?php endif; ?>
                             </td>
+                                <td>
+                                    <?php if ($log['staff_name']): ?>
+                                        <strong>Name:</strong> <?= $log['staff_name'] ?><br>
+                                        <strong>Email:</strong> <?= $log['staff_email'] ?><br>
+                                        <strong>Location:</strong> <?= $log['service_location'] ?><br>
+                                        <strong>Details:</strong> <?= $log['support_details'] ?><br>
+                                        <strong>Medication:</strong> <?= $log['medication'] ?><br>
+                                        <strong>Handover:</strong> <?= $log['handover'] ?><br>
+                                    <?php else: ?>
+                                        No Support Workwe Info
+                                    <?php endif; ?>
+                                </td>
                             <td><?= $log['specific_instructions'] ?: 'None' ?></td>
                         </tr>
                     <?php endwhile; ?>
