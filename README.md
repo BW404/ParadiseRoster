@@ -72,30 +72,6 @@ Paradise Roster is a web application designed to manage user logins and logouts 
 - process_action.php: Script for processing login and logout actions.
 - register.php: User registration page.
 
-## **Database Schema**
-
-CREATE TABLE `log_entries` (
-`id` int(11) NOT NULL,
-`user_id` int(11) NOT NULL,
-`participant_id` int(11) NOT NULL,
-`action` enum('login','logout') NOT NULL,
-`login_time` datetime DEFAULT NULL,
-`logout_time` datetime DEFAULT NULL,
-`incident_details` text DEFAULT NULL,
-`specific_instructions` text DEFAULT NULL,
-`incident_time` time DEFAULT NULL,
-`incident_location` varchar(255) DEFAULT NULL,
-`calm_time` time DEFAULT NULL,
-`description` text DEFAULT NULL,
-`hurt` enum('yes','no') DEFAULT NULL,
-`current_status` text DEFAULT NULL,
-PRIMARY KEY (`id`),
-KEY `user_id` (`user_id`),
-KEY `participant_id` (`participant_id`),
-CONSTRAINT `log_entries_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-CONSTRAINT `log_entries_ibfk_2` FOREIGN KEY (`participant_id`) REFERENCES `participants` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 ## **TODO**
 - <s> Add following fields before incident details (This part will be visible to the next support worker ).
