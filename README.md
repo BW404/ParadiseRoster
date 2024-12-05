@@ -111,11 +111,11 @@ CONSTRAINT `log_entries_ibfk_2` FOREIGN KEY (`participant_id`) REFERENCES `parti
         - Bedtime
     - Handover: to which support worker( name)
     - Instructions for next Staff: </s>
-- Add authentication for admin_dashboard
 - <s>Add edit and delete functionality for support workers. </s>
-- Fix the bug when adding participants. 
 - <s>Add a way to inform the next support worker about privious state of the participant.</s>
 - <s> Make the ui responsive</s>
+- Add authentication for admin_dashboard
+- Fix the bug when adding participants. 
 
 
 ## **Contributing**
