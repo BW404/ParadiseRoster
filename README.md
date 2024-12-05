@@ -64,7 +64,6 @@ Paradise Roster is a web application designed to manage user logins and logouts 
 ### File Descriptions
 
 - admin_dashboard.php: Admin dashboard for managing users, viewing reports, and managing participants.
-- auto_push.py: Script for automated tasks (ignored by Git).
 - dashboard.php: User dashboard for logging in and out participants.
 - db_connect.php: Database connection settings.
 - log_entries.sql: SQL file for setting up the database schema.
