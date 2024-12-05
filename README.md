@@ -98,7 +98,7 @@ CONSTRAINT `log_entries_ibfk_2` FOREIGN KEY (`participant_id`) REFERENCES `parti
 
 
 ## **TODO**
-~~ - Add following fields before incident details (This part will be visible to the next support worker) [start working]
+- Add following fields before incident details (This part will be visible to the next support worker) [start working]
     - Staff Name:
     - Staff Contact: 
     - Staff Email:
@@ -110,12 +110,12 @@ CONSTRAINT `log_entries_ibfk_2` FOREIGN KEY (`participant_id`) REFERENCES `parti
         - Evening
         - Bedtime
     - Handover: to which support worker( name)
-    - Instructions for next Staff: ~~
+    - Instructions for next Staff:
 - Add authentication for admin_dashboard
-~~ - Add edit and delete functionality for support workers ~~
+- Add edit and delete functionality for support workers
 - Fix the bug when adding participants. 
-~~ - Add a way to inform the next support worker about privious state of the participant.~~
-~~ - Make the ui responsive ~~
+- Add a way to inform the next support worker about privious state of the participant.
+- Make the ui responsive
 
 
 ## **Contributing**
