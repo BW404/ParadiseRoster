@@ -71,6 +71,7 @@ $conn->close();
         <!-- Manage Users Tab -->
         <div class="tab-pane fade show active" id="users">
             <h3>Users</h3>
+            <a href="add_user.php" class="btn btn-success mb-3">Add New User</a>
             <table class="table table-striped">
                 <thead>
                 <tr>
