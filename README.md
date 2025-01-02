@@ -91,7 +91,8 @@ Paradise Roster is a web application designed to manage user logins and logouts 
 - <s> Make the ui responsive</s>
 - Add authentication for admin_dashboard
 - Fix the bug when adding participants. 
-
+- Export Data on PDF.
+- Report System ( Need to discuss )
 
 ## **Contributing**
 
