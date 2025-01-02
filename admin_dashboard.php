@@ -5,7 +5,7 @@ include 'db_connect.php';
 // Fetch all users
 $sql_users = "SELECT u.id, u.username, GROUP_CONCAT(p.name SEPARATOR ', ') AS participants 
               FROM users u 
-              LEFT JOIN user_participants up ON u.id = up.user_id 
+              LEFT JOIN user_participants up ON u.id = up.user_id  
               LEFT JOIN participants p ON up.participant_id = p.id 
               GROUP BY u.id, u.username";
 $result_users = $conn->query($sql_users);
