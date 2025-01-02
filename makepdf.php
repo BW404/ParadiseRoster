@@ -1,43 +1,33 @@
 <?php
+
+// require_once 'vendor/autoload.php';
+
+// Include database connection
 include 'db_connect.php';
 
-require('vendor/autoload.php');
-// $con=mysqli_connect('localhost','root','','youtube');
-// $res=mysqli_query($con,"select * from user");
-// if(mysqli_num_rows($res)>0){
-// 	$html='<style></style><table class="table">';
-// 		$html.='<tr><td>ID</td><td>Name</td><td>Email</td></tr>';
-// 		while($row=mysqli_fetch_assoc($res)){
-// 			$html.='<tr><td>'.$row['id'].'</td><td>'.$row['name'].'</td><td>'.$row['email'].'</td></tr>';
-// 		}
-// 	$html.='</table>';
-// }else{
-// 	$html="Data not found";
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['entry_id'])) {
+    $entry_id = $_POST['entry_id'];
+
+    // Fetch the log entry details
+    $sql = "SELECT l.*, u.username, p.name AS participant_name 
+            FROM log_entries l
+            JOIN users u ON l.user_id = u.id
+            JOIN participants p ON l.participant_id = p.id
+            WHERE l.id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $entry_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $log = $result->fetch_assoc();
+
+        $mpdf = new \Mpdf\Mpdf();
 
 
 
-
-
-// Creaet a table for the following fields:
-
-// Participant Name
-// Login Time
-// Logout Time	
-// Incident Details
-// Support Workwe Info
-// Specific Instructions
-
-
-
-
-
-
-
-
-
-
-
-$html = '<style>
+        // Create HTML content
+        $html = '<style>
             body {
                 font-family: Arial, sans-serif;
             }
@@ -141,14 +131,20 @@ $html = '<style>
     
     ';
 
-echo $html;
-// }
-$mpdf=new \Mpdf\Mpdf();
-$mpdf->WriteHTML($html);
-$file='media/'.time().'.pdf';
-$mpdf->output($file,'D');
-//D
-//I
-//F
-//S
+        echo $html;
+
+        $mpdf->WriteHTML($html);
+    
+    
+        //output to the browser
+        $mpdf->Output($log['login_time'], 'D');    
+    } else {
+        echo "No data found for the specified entry.";
+    }
+    $stmt->close();
+} else {
+    echo "Invalid request.";
+}
+
+$conn->close();
 ?>

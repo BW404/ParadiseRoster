@@ -116,8 +116,9 @@ $conn->close();
                     <th>Login Time</th>
                     <th>Logout Time</th>
                     <th>Incident Details</th>
-                    <th>Support Workwe Info</th>
+                    <th>Support Worker Info</th>
                     <th>Specific Instructions</th>
+                    <th>Download</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -142,24 +143,30 @@ $conn->close();
                                     No Incident
                                 <?php endif; ?>
                             </td>
-                                <td>
-                                    <?php if ($log['staff_name']): ?>
-                                        <strong>Name:</strong> <?= $log['staff_name'] ?><br>
-                                        <strong>Email:</strong> <?= $log['staff_email'] ?><br>
-                                        <strong>Location:</strong> <?= $log['service_location'] ?><br>
-                                        <strong>Details:</strong> <?= $log['support_details'] ?><br>
-                                        <strong>Medication:</strong> <?= $log['medication'] ?><br>
-                                        <strong>Handover:</strong> <?= $log['handover'] ?><br>
-                                    <?php else: ?>
-                                        No Support Workwe Info
-                                    <?php endif; ?>
-                                </td>
+                            <td>
+                                <?php if ($log['staff_name']): ?>
+                                    <strong>Name:</strong> <?= $log['staff_name'] ?><br>
+                                    <strong>Email:</strong> <?= $log['staff_email'] ?><br>
+                                    <strong>Location:</strong> <?= $log['service_location'] ?><br>
+                                    <strong>Details:</strong> <?= $log['support_details'] ?><br>
+                                    <strong>Medication:</strong> <?= $log['medication'] ?><br>
+                                    <strong>Handover:</strong> <?= $log['handover'] ?><br>
+                                <?php else: ?>
+                                    No Support Worker Info
+                                <?php endif; ?>
+                            </td>
                             <td><?= $log['specific_instructions'] ?: 'None' ?></td>
+                            <td>
+                                <form method="POST" action="makepdf.php" style="display:inline;">
+                                    <input type="hidden" name="entry_id" value="<?= $log['id'] ?>">
+                                    <button type="submit" class="btn btn-success">Download</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="8" class="text-center">No logs found.</td>
+                        <td colspan="10" class="text-center">No logs found.</td>
                     </tr>
                 <?php endif; ?>
                 </tbody>
